@@ -16,4 +16,14 @@ RUN set -eux \
     \
     && docker-php-ext-enable redis \
     \
+    && runDeps="$( \
+      scanelf --needed --nobanner --recursive /usr/local \
+        | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+        | sort -u \
+        | xargs -r apk info --installed \
+        | sort -u \
+    )" \
+    \
+    && apk add --virtual .php-rundeps $runDeps \
+    \
     && apk del .build-deps
