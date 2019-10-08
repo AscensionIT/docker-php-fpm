@@ -15,7 +15,7 @@ RUN set -eux \
     && pecl install mcrypt-1.0.1 \
     \
     && docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd ldap \
-          opcache mysqli pdo_mysql zip soap mcrypt\
+          opcache mysqli pdo_mysql zip soap bcmath\
     \
     && docker-php-ext-enable redis mcrypt\
     \

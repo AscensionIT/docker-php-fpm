@@ -12,6 +12,9 @@ RUN set -eux \
     \
     && pecl install redis-4.2.0 \
     \
+    && pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    \
     && docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd ldap \
           opcache mysqli pdo_mysql zip soap bcmath\
     \
