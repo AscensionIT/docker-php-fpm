@@ -13,7 +13,7 @@ RUN set -eux \
     && pecl install redis-4.2.0 yaml\
     \
     && docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd ldap \
-          opcache mysqli pdo_mysql zip soap bcmath gmp\
+          opcache mysqli pdo_mysql zip soap bcmath gmp sockets\
     \
     && docker-php-ext-enable redis yaml\
     \
