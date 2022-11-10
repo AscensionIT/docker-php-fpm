@@ -5,17 +5,19 @@ MAINTAINER Janaka Wickramasinghe <janaka@ascesnionit.com.au>
 RUN set -eux \
     && apk add --no-cache --virtual .build-deps libjpeg-turbo-dev \ 
       freetype-dev libpng-dev openldap-dev mariadb-dev libxml2-dev \
-      libzip-dev gmp gmp-dev yaml-dev rrdtool-dev\
+      libzip-dev gmp gmp-dev yaml-dev rrdtool-dev libmemcached-dev\
+    \
+    && apk add --no-cache font-noto tzdata\
     \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ \
           --with-jpeg=/usr/include/ \
     \
-    && pecl install redis-4.2.0 yaml rrd\
+    && pecl install redis-4.2.0 yaml rrd memcached\
     \
     && docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd ldap \
           opcache mysqli pdo_mysql zip soap bcmath gmp sockets\
     \
-    && docker-php-ext-enable redis yaml rrd\
+    && docker-php-ext-enable redis yaml rrd memcached\
     \
     && runDeps="$( \
       scanelf --needed --nobanner --recursive /usr/local \
